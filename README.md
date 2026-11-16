@@ -1,32 +1,50 @@
-# G.O. Odhiambo — Official Author Website
+# G.O. Odhiambo — Official Author Website (v2)
 
-A simple static author website for GitHub Pages. No reader accounts or login are required.
+This is a simple static author website with a reader discussion feature:
+- Novel collection and individual excerpt pages
+- Free PDF links for books explicitly marked free
+- Purchase/enquiry links for paid books
+- Reader comments and replies
+- Five-star ratings
+- No reader accounts or login screens
+
+## 1. Publish the files
+Upload the contents of this folder to the ROOT of your GitHub repository, replacing the previous website files. Keep `index.html`, `reader.html`, `styles.css`, `books.js`, `script.js`, and `reader.js` at the root.
+
+## 2. Set up the reader discussion database
+1. Create a Supabase project (or use a separate project dedicated to this author website).
+2. Open SQL Editor in Supabase.
+3. Create a new query, paste all of `supabase-setup.sql`, and run it.
+4. Open Project Settings > API (or API Keys, depending on the dashboard).
+5. Copy the Project URL and the public anon/publishable key. NEVER use the service_role/secret key in website code.
+6. Open `books.js` and replace:
+   - `YOUR_SUPABASE_PROJECT_URL`
+   - `YOUR_SUPABASE_ANON_OR_PUBLISHABLE_KEY`
+7. Replace `YOUR-EMAIL@example.com` with your real author contact email.
+
+## 3. Add your real book information
+Edit the `books` list in `books.js`. Replace placeholder descriptions and excerpts with approved text.
+- `access: "paid"` shows an enquiry link.
+- `access: "free"` plus a real `pdf` path displays a free PDF button.
+- Set `purchaseUrl` to a real payment/book-order page if you have one. Leave blank to use email enquiry.
+- Never upload paid full-book PDFs into a public GitHub repository. The repository is public, so its files can be downloaded by anyone.
+
+## 4. Supabase security and moderation notes
+The SQL uses Row Level Security and permits public reading and submission of comments and ratings. It does not create reader accounts. The rating code stores a browser-generated token so the same browser can update its rating for a book. This is a convenience, NOT strong identity verification: a visitor can clear browser data or use another device to rate again. Public comment forms can also attract spam. Before a large public launch, add moderation (for example, a review queue) and stronger anti-spam protection such as a CAPTCHA or a server-side function with rate limiting.
+
+The SQL validates the book slugs and comment lengths. Replies are limited to one level (a reply to a top-level comment), which keeps discussions readable. This starter version displays comments immediately; remove abusive comments through the Supabase Table Editor. Do not expose a Supabase service-role key in client-side files.
+
+## 5. GitHub Pages
+In repository Settings > Pages:
+- Source: Deploy from a branch
+- Branch: `main`
+- Folder: `/ (root)`
+Save. GitHub will show the published URL after deployment.
 
 ## Files
-- `index.html` — homepage and novel collection
-- `reader.html` — online sample-reading page
-- `styles.css` — design and responsive layout
-- `books.js` — novel descriptions, sample text, free/paid status and PDF links
-- `script.js` — interactions
-
-## Important before publishing
-1. Open `books.js`.
-2. Replace `YOUR-EMAIL@example.com` with your real author email.
-3. Replace each sample description and sample text with your approved book material.
-4. For a free PDF, put the PDF in `books/` and set its `pdf` field to its path, for example `books/free-title.pdf`.
-5. For a paid book, do not put the complete paid PDF in this public repository. GitHub Pages is public hosting and cannot protect a PDF from direct access. Use the enquiry link or a trusted sales/delivery service for paid copies.
-6. Set `access: "free"` for free books and `access: "paid"` for books available by purchase enquiry.
-
-## Publish with GitHub Pages
-1. Create a public GitHub repository.
-2. Upload all files and folders in this project to the repository root (not inside an extra nested project folder).
-3. In the repository, open **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Choose branch **main** and folder **/(root)**, then Save.
-6. Wait for GitHub Pages to publish and open the URL shown in Settings → Pages.
-
-## Add a free PDF
-Upload the PDF into the `books` folder. In `books.js`, update that book's `pdf` value to the exact filename, e.g. `books/borrowed-tomorrow.pdf`.
-
-## Add a paid purchase link
-Set `PURCHASE_LINK` in `books.js` to a real enquiry or checkout URL. If it is blank, the site uses the email address set in `CONTACT_EMAIL`.
+- `index.html` — homepage and book discussion modal
+- `reader.html` / `reader.js` — excerpt reading page
+- `styles.css` — responsive styling
+- `books.js` — book details and public Supabase settings
+- `script.js` — catalogue, comments, replies and ratings
+- `supabase-setup.sql` — database setup

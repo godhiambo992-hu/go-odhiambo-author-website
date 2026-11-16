@@ -3,100 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="The official literary website of G.O. Odhiambo. Discover novels, read selected chapters and find out how to obtain complete books.">
-  <meta name="theme-color" content="#f5f0e7">
+  <meta name="theme-color" content="#183b35">
+  <meta name="description" content="The official website of author G.O. Odhiambo. Discover novels, read excerpts and share your reviews.">
   <title>G.O. Odhiambo | Official Author Website</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="books.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <a class="wordmark" href="#home" aria-label="G.O. Odhiambo home">G.O. <span>ODHIAMBO</span></a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
-    <nav id="mainNav" class="main-nav">
-      <a href="#home">Home</a>
-      <a href="#novels">Novels</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+<header class="site-header">
+  <a class="brand" href="index.html"><span class="brand-mark">G.O.</span><span>G.O. ODHIAMBO<small>AUTHOR & STORYTELLER</small></span></a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">☰</button>
+  <nav id="mainNav">
+    <a href="#home">Home</a><a href="#novels">Novels</a><a href="#about">About</a><a href="#contact">Contact</a>
+  </nav>
+</header>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-copy">
-        <p class="eyebrow">THE OFFICIAL AUTHOR WEBSITE</p>
-        <h1>Stories that stay<br><em>with you.</em></h1>
-        <p class="hero-intro">Enter the literary world of G.O. Odhiambo — stories of people, choices, secrets, faith and the complicated business of being human.</p>
-        <a class="button button-dark" href="#novels">Explore the novels <span aria-hidden="true">→</span></a>
+<main>
+  <section class="hero" id="home">
+    <div class="hero-copy">
+      <p class="eyebrow">STORIES THAT STAY WITH YOU</p>
+      <h1>Every life has a story.<br><em>Every story leaves a mark.</em></h1>
+      <p>Enter worlds shaped by truth, silence, ambition, faith, friendship and the difficult choices that define us.</p>
+      <a class="button button-light" href="#novels">Explore the novels</a>
+    </div>
+    <div class="hero-art" aria-label="Decorative open book illustration"><div class="book-shape"><span>THE NEXT CHAPTER<br>BEGINS HERE</span></div></div>
+  </section>
+
+  <section class="section" id="novels">
+    <div class="section-heading">
+      <div><p class="eyebrow">THE COLLECTION</p><h2>Novels & stories</h2></div>
+      <p>Choose a title to discover its story, read an excerpt and join the conversation.</p>
+    </div>
+    <div id="bookGrid" class="book-grid"><p class="muted">Loading the collection…</p></div>
+  </section>
+
+  <section class="about-section" id="about">
+    <div class="about-symbol">G.O.</div>
+    <div><p class="eyebrow">ABOUT THE AUTHOR</p><h2>G.O. Odhiambo</h2>
+      <p>G.O. Odhiambo is a writer interested in the human stories behind public events and private decisions. His work explores relationships, society, faith, ambition, injustice and the complicated spaces between what people say and what they truly feel.</p>
+      <p>This is the official home of his novels, reading excerpts and conversations with readers.</p>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <p class="eyebrow">KEEP IN TOUCH</p><h2>Have a thought about a story?</h2>
+    <p>For book enquiries, permissions, speaking engagements or reader correspondence, get in touch.</p>
+    <a class="button" id="contactLink" href="mailto:YOUR-EMAIL@example.com">Contact the author</a>
+  </section>
+</main>
+
+<footer><span>© <span id="year"></span> G.O. Odhiambo. All rights reserved.</span><span>Written with purpose. Read with curiosity.</span></footer>
+
+<div class="modal-backdrop" id="bookModal" aria-hidden="true">
+  <section class="book-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+    <p class="eyebrow" id="modalCategory">NOVEL</p><h2 id="modalTitle"></h2>
+    <p id="modalDescription"></p>
+    <div class="modal-actions" id="modalActions"></div>
+    <div class="rating-summary" id="ratingSummary">Reader rating: not rated yet</div>
+    <div class="engagement">
+      <h3>Rate this novel</h3>
+      <p class="muted">Choose from one to five stars. No reader account is required.</p>
+      <div class="star-picker" id="starPicker" role="group" aria-label="Rate this novel">
+        <button type="button" data-rating="1" aria-label="1 star">★</button><button type="button" data-rating="2" aria-label="2 stars">★</button><button type="button" data-rating="3" aria-label="3 stars">★</button><button type="button" data-rating="4" aria-label="4 stars">★</button><button type="button" data-rating="5" aria-label="5 stars">★</button>
       </div>
-      <div class="hero-art" aria-label="Decorative stack of books">
-        <div class="book-stack">
-          <div class="book book-one"><span>G.O. ODHIAMBO</span><strong>FICTION<br>&amp; THE<br>HUMAN<br>STORY</strong></div>
-          <div class="book book-two"><span>STORIES · IDEAS · LIFE</span></div>
-          <div class="book book-three"></div>
-        </div>
-        <p class="art-caption">A home for stories and the minds behind them.</p>
-      </div>
-    </section>
-
-    <section class="intro-strip">
-      <p>FICTION <span>✳</span> REFLECTION <span>✳</span> THE HUMAN EXPERIENCE</p>
-    </section>
-
-    <section class="section novels-section" id="novels">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">THE BOOKSHELF</p>
-          <h2>Explore my novels</h2>
-        </div>
-        <p class="section-note">Discover each story, read an available sample online, or find out how to obtain the complete book.</p>
-      </div>
-      <div id="novelGrid" class="novel-grid" aria-live="polite"></div>
-    </section>
-
-    <section class="author-section" id="about">
-      <div class="author-mark">G.O.</div>
-      <div class="author-copy">
-        <p class="eyebrow">A NOTE FROM THE AUTHOR</p>
-        <h2>About G.O. Odhiambo</h2>
-        <p>G.O. Odhiambo is a writer interested in the tensions that shape human life: relationships, identity, belief, ambition, memory and the consequences of choice. His fiction brings together reflective storytelling, compelling characters and questions that remain long after the final page.</p>
-        <p>This website is the home of his novels, literary projects and conversations with readers.</p>
-      </div>
-    </section>
-
-    <section class="contact-section" id="contact">
-      <p class="eyebrow">LET'S CONNECT</p>
-      <h2>Every story begins<br>with a conversation.</h2>
-      <p>For book enquiries, reader feedback, interviews or literary collaborations, get in touch.</p>
-      <a class="button button-light" id="contactLink" href="mailto:YOUR-EMAIL@example.com">Contact the author <span aria-hidden="true">→</span></a>
-      <small class="contact-hint">The email address will be updated in the website settings.</small>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <a class="wordmark footer-wordmark" href="#home">G.O. <span>ODHIAMBO</span></a>
-    <p>© <span id="year"></span> G.O. Odhiambo. All rights reserved.</p>
-    <a href="#home">Back to top ↑</a>
-  </footer>
-
-  <div class="modal-backdrop" id="bookModal" hidden>
-    <article class="book-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button class="modal-close" id="modalClose" aria-label="Close">×</button>
-      <p class="eyebrow" id="modalGenre"></p>
-      <h2 id="modalTitle"></h2>
-      <p id="modalDescription"></p>
-      <div class="modal-actions">
-        <a class="button button-dark" id="readButton" href="#" target="_blank" rel="noopener">Read online</a>
-        <a class="button button-outline" id="pdfButton" href="#" target="_blank" rel="noopener">Open PDF</a>
-        <a class="button button-outline" id="purchaseButton" href="#" target="_blank" rel="noopener">Ask about the full book</a>
-      </div>
-      <p class="modal-footnote" id="modalNote"></p>
-    </article>
-  </div>
-
-  <script src="books.js"></script>
-  <script src="script.js"></script>
+      <p class="form-note" id="ratingMessage" aria-live="polite"></p>
+    </div>
+    <div class="engagement">
+      <h3>Reader discussion</h3>
+      <p class="muted">Use a display name. Please keep the discussion respectful and avoid sharing spoilers without a warning.</p>
+      <form id="commentForm" class="reader-form">
+        <label for="readerName">Your display name</label><input id="readerName" maxlength="40" required placeholder="e.g. Avid Reader">
+        <label for="commentText">Your comment or review</label><textarea id="commentText" rows="4" maxlength="1500" required placeholder="What did you think about this story?"></textarea>
+        <button class="button" type="submit" id="commentSubmit">Post comment</button>
+        <p class="form-note" id="commentMessage" aria-live="polite"></p>
+      </form>
+      <div id="commentsList" class="comments-list"><p class="muted">Comments will appear here.</p></div>
+    </div>
+  </section>
+</div>
 </body>
 </html>
