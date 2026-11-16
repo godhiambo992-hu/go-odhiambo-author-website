@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Read a selected extract from a G.O. Odhiambo novel.">
+  <title>Read a Novel | G.O. Odhiambo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .reader-wrap{max-width:760px;margin:70px auto;padding:0 24px 90px}
+    .reader-top{display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:20px}
+    .reader-top a{text-decoration:none;color:var(--accent);font-size:.85rem}
+    .reader-title{font-size:clamp(2.4rem,6vw,4rem);margin:48px 0 10px}
+    .reader-genre{color:var(--muted);font-size:.85rem}
+    .reader-text{font-family:var(--serif);font-size:1.18rem;line-height:2;margin-top:40px;white-space:pre-line}
+    .reader-notice{background:var(--paper-deep);padding:18px;margin-top:45px;font: .85rem var(--sans)}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="index.html">G.O. <span>ODHIAMBO</span></a>
+    <a href="index.html#novels" style="text-decoration:none;color:var(--muted);font-size:.85rem">← All novels</a>
+  </header>
+  <main class="reader-wrap">
+    <div class="reader-top"><span class="eyebrow" style="margin:0">SELECTED READING</span><a href="index.html#novels">Return to bookshelf</a></div>
+    <p class="eyebrow" style="margin-top:45px">A NOVEL BY G.O. ODHIAMBO</p>
+    <h1 class="reader-title" id="readerTitle">Loading novel…</h1>
+    <p class="reader-genre" id="readerGenre"></p>
+    <div class="reader-text" id="readerText"></div>
+    <div class="reader-notice">You are reading a sample extract. To enquire about the complete novel, return to the <a href="index.html#novels">novel collection</a>.</div>
+  </main>
+  <script src="books.js"></script>
+  <script>
+    const id = new URLSearchParams(location.search).get("book");
+    const book = NOVELS.find(item => item.id === id);
+    if (book) {
+      document.title = book.title + " | G.O. Odhiambo";
+      document.getElementById("readerTitle").textContent = book.title;
+      document.getElementById("readerGenre").textContent = book.genre;
+      document.getElementById("readerText").textContent = book.sample || "A reading extract has not yet been added for this novel.";
+    } else {
+      document.getElementById("readerTitle").textContent = "Novel not found";
+      document.getElementById("readerText").textContent = "Please return to the novel collection and select a book.";
+    }
+  </script>
+</body>
+</html>
